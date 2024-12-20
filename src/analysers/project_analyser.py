@@ -4,6 +4,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 from langchain_ollama import OllamaLLM
+from langchain_google_vertexai import ChatVertexAI
 
 from src.indexers.codebase_indexer import CodebaseIndexer
 
@@ -15,7 +16,16 @@ class ProjectAnalyzer:
 
     def __init__(self, project_path: str):
         self.indexer = CodebaseIndexer(project_path)
-        self.llm = OllamaLLM(model="codellama", temperature=0.1, num_ctx=8192)
+        # self.llm = OllamaLLM(model="codellama", temperature=0.1, num_ctx=8192)
+        self.llm = ChatVertexAI(
+            model="gemini-1.5-flash-001",
+            project="gen-lang-client-0979558974",
+            temperature=0,
+            max_tokens=None,
+            max_retries=6,
+            stop=None,
+            # other params...
+        )
 
     def initialize(self):
         """Indexes the project and prepares the system"""
@@ -36,7 +46,7 @@ class ProjectAnalyzer:
                 3. Actual patterns and structures present in the code
                 4. Technical details that are explicitly present
                 
-                DO NOT make assumptions about functionality not shown in the code.
+                Use only provided context for your assumptions and explanations.
                 Always reference specific code elements in your explanation.""",
                 ),
                 (
@@ -66,3 +76,12 @@ class ProjectAnalyzer:
         )
 
         return chain
+
+# curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyA7MMSuBEuOObDZtjhHpF4UuvDMOFPALB0" \
+# -H 'Content-Type: application/json' \
+# -X POST \
+# -d '{
+#   "contents": [{
+#     "parts":[{"text": "Explain how AI works"}]
+#     }]
+#    }'
