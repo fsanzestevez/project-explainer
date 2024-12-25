@@ -4,6 +4,7 @@ langchain-core>=0.1.0
 langchain-huggingface>=0.0.5
 langchain-chroma>=0.0.5
 langchain-ollama>=0.0.5
+langchain-google-vertexai>=2.0.9
 transformers>=4.33.0
 sentence-transformers>=2.2.2
 chromadb>=0.4.5

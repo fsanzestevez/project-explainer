@@ -2,7 +2,7 @@ import logging
 import re
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
-
+import os
 import inflection
 from fastembed import TextEmbedding
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -10,7 +10,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from src.config.file_config import FileConfig
 
 logger = logging.getLogger("main_logger")
-
+os.environ["TOKENIZERS_PARALLELISM"] = "true"
 
 class DocumentProcessor:
     """document processor with dual embedding support"""

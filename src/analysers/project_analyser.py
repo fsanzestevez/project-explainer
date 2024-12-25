@@ -45,7 +45,7 @@ class ProjectAnalyzer:
                 2. Specific classes, functions, and their relationships
                 3. Actual patterns and structures present in the code
                 4. Technical details that are explicitly present
-                
+
                 Use only provided context for your assumptions and explanations.
                 Always reference specific code elements in your explanation.""",
                 ),
